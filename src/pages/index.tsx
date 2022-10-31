@@ -1,8 +1,9 @@
 import { GetStaticProps } from "next";
-const yaml = require("js-yaml");
+import { useContext } from "react";
+import Header from "../components/header/header";
 import { type AdventureType } from "../types";
-
-const LANGUAGES = ["en", "nl"];
+import { AppContext, LANGUAGES } from "./_app";
+import yaml from "js-yaml";
 
 type Props = {
   languages: {
@@ -16,19 +17,12 @@ type Props = {
 };
 
 const App: React.FC<Props> = (props) => {
+  const appContent = useContext(AppContext);
+
   return (
     <div>
-      {Object.keys(props.languages).map((lang) => {
-        return Object.keys(props.languages[lang]).map((adventure) => {
-          return Object.keys(props.languages[lang][adventure]).map((levels) => {
-            return (
-              <p>
-                {lang} {adventure} {levels}
-              </p>
-            );
-          });
-        });
-      })}
+      <Header />
+      {appContent.lang}
     </div>
   );
 };
