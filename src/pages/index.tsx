@@ -1,9 +1,9 @@
 import { GetStaticProps } from "next";
-import { useContext } from "react";
+import { useState } from "react";
 import Header from "../components/header/header";
 import { type AdventureType } from "../types";
-import { AppContext, LANGUAGES } from "./_app";
 import yaml from "js-yaml";
+import AppContext, { LANGUAGES } from "../app-context";
 
 type Props = {
   languages: {
@@ -17,24 +17,35 @@ type Props = {
 };
 
 const App: React.FC<Props> = (props) => {
-  const appContent = useContext(AppContext);
+  const [lang, setLang] = useState<typeof LANGUAGES[number]>("en");
+  const [adventureId, setAdventureId] = useState<string>("default");
+  const [levelId, setLevelId] = useState<string>("1");
 
   return (
-    <div>
-      <Header />
-      {appContent.lang}
-    </div>
+    <AppContext.Provider
+      value={{
+        lang,
+        setLang,
+        adventure: props.languages[lang][adventureId],
+        level: props.languages[lang][adventureId][levelId],
+        setAdventureId,
+        setLevelId,
+        adventures: props.languages[lang],
+        languages: LANGUAGES,
+      }}
+    >
+      <div>
+        <Header />
+      </div>
+    </AppContext.Provider>
   );
 };
 
 export default App;
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  let data: Props = {
-    languages: {
-      en: undefined,
-      nl: undefined,
-    },
+  let data: any = {
+    languages: {},
   };
 
   for (let i = 0; i < LANGUAGES.length; i++) {
