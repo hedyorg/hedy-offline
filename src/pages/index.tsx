@@ -4,6 +4,7 @@ import Header from "../components/header/header";
 import { type AdventureType } from "../types";
 import yaml from "js-yaml";
 import AppContext, { LANGUAGES } from "../app-context";
+import InfoPanel from "../components/info-panel/InfoPanel";
 
 type Props = {
   languages: {
@@ -27,7 +28,7 @@ const App: React.FC<Props> = (props) => {
         lang,
         setLang,
         adventure: props.languages[lang][adventureId],
-        level: props.languages[lang][adventureId][levelId],
+        level: props.languages[lang][adventureId].levels[levelId],
         setAdventureId,
         setLevelId,
         adventures: props.languages[lang],
@@ -36,6 +37,7 @@ const App: React.FC<Props> = (props) => {
     >
       <div>
         <Header />
+        <InfoPanel />
       </div>
     </AppContext.Provider>
   );
