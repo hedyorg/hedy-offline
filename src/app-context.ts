@@ -1,6 +1,7 @@
 import { createContext, SetStateAction } from "react";
 import { Dispatch } from "react";
 import { AdventureType, LevelType } from "./types";
+import { MutableRefObject } from "react";
 
 export const LANGUAGES = ["en", "nl", "fr", "de"] as const;
 
@@ -9,7 +10,7 @@ const AppContext = createContext<{
   setLang?: Dispatch<SetStateAction<typeof LANGUAGES[number]>>;
   setAdventureId?: Dispatch<SetStateAction<string>>;
   setLevelId?: Dispatch<SetStateAction<string>>;
-
+  code: MutableRefObject<string>;
   languages: typeof LANGUAGES;
   adventures: {
     [key: string]: AdventureType;
@@ -22,6 +23,7 @@ const AppContext = createContext<{
   adventures: null,
   level: null,
   adventure: null,
+  code: null,
 });
 
 export default AppContext;
