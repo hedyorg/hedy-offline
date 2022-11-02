@@ -1,52 +1,54 @@
 import { GetStaticProps } from "next";
-import { useRef, useState } from "react";
-import Header from "../components/header/header";
-import { type AdventureType } from "../types";
+import { useEffect, useState } from "react";
+import { Props } from "../types";
 import yaml from "js-yaml";
-import AppContext, { LANGUAGES } from "../app-context";
-import InfoPanel from "../components/info-panel/InfoPanel";
-import CodePanel from "../components/code-panel/code-panel";
+import { LANGUAGES } from "../app-context";
+import Editor from "../screens/editor/editor";
+import Loading from "../screens/loading/loading";
+import { ipcRenderer } from "electron";
 
-type Props = {
-  languages: {
-    en?: {
-      [key: string]: AdventureType;
-    };
-    nl?: {
-      [key: string]: AdventureType;
-    };
-  };
+const isPythonInstalled = async () => {
+  return await ipcRenderer.invoke("has-python3");
+};
+
+const doesVenvFolderExist = async () => {
+  return await ipcRenderer.invoke("has-venv");
+};
+
+const createVenv = async () => {
+  return await ipcRenderer.invoke("create-venv");
 };
 
 const App: React.FC<Props> = (props) => {
-  const [lang, setLang] = useState<typeof LANGUAGES[number]>("en");
-  const [adventureId, setAdventureId] = useState<string>("default");
-  const [levelId, setLevelId] = useState<string>("1");
-  const code = useRef<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
-  return (
-    <AppContext.Provider
-      value={{
-        lang,
-        setLang,
-        code,
-        adventure: props.languages[lang][adventureId],
-        level: props.languages[lang][adventureId].levels[levelId],
-        setAdventureId,
-        setLevelId,
-        adventures: props.languages[lang],
-        languages: LANGUAGES,
-      }}
-    >
-      <div>
-        <Header />
-        <div className="grid grid-cols-2 h-screen">
-          <CodePanel />
-          <InfoPanel />
-        </div>
-      </div>
-    </AppContext.Provider>
-  );
+  const load = async () => {
+    const exists = await doesVenvFolderExist();
+
+    if (!exists) {
+      console.log("Creating venv");
+      const created = await createVenv();
+      if (!created) {
+        console.log("Failed to create venv");
+      } else {
+        console.log("Created venv");
+      }
+    } else {
+      console.log("venv exists");
+    }
+
+    const hedy = ipcRenderer.invoke("run-hedy-server");
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  if (loading) return <Loading />;
+
+  return <Editor {...props} />;
 };
 
 export default App;

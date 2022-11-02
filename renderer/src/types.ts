@@ -23,3 +23,14 @@ export interface LevelType {
   story_text_6?: string;
   example_code_6?: string;
 }
+
+export type Props = {
+  languages: {
+    en?: {
+      [key: string]: AdventureType;
+    };
+    nl?: {
+      [key: string]: AdventureType;
+    };
+  };
+};
