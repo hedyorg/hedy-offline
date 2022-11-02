@@ -23,6 +23,7 @@ const App: React.FC<Props> = (props) => {
   const [adventureId, setAdventureId] = useState<string>("default");
   const [levelId, setLevelId] = useState<string>("1");
   const code = useRef<string>("");
+
   return (
     <AppContext.Provider
       value={{
