@@ -5,40 +5,39 @@ import yaml from "js-yaml";
 import { LANGUAGES } from "../app-context";
 import Editor from "../screens/editor/editor";
 import Loading from "../screens/loading/loading";
-import { ipcRenderer } from "electron";
-
-const isPythonInstalled = async () => {
-  return await ipcRenderer.invoke("has-python3");
-};
-
-const doesVenvFolderExist = async () => {
-  return await ipcRenderer.invoke("has-venv");
-};
-
-const createVenv = async () => {
-  return await ipcRenderer.invoke("create-venv");
-};
+import { motion, AnimatePresence, delay } from "framer-motion";
 
 const App: React.FC<Props> = (props) => {
   const [loading, setLoading] = useState<boolean>(true);
 
-  const load = async () => {
-    const exists = await doesVenvFolderExist();
+  const isConnected = async () => {
+    var raw = JSON.stringify({
+      code: "print hello world!",
+      level: "1",
+    });
 
-    if (!exists) {
-      console.log("Creating venv");
-      const created = await createVenv();
-      if (!created) {
-        console.log("Failed to create venv");
-      } else {
-        console.log("Created venv");
-      }
-    } else {
-      console.log("venv exists");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    try {
+      const res = await fetch("http://localhost:4444/parse", {
+        method: "POST",
+        body: raw,
+        redirect: "follow",
+        headers: myHeaders,
+      });
+      return res.status === 200;
+    } catch (error) {
+      return false;
     }
+  };
 
-    const hedy = ipcRenderer.invoke("run-hedy-server");
-
+  const load = async () => {
+    let reachable = await isConnected();
+    while (!reachable) {
+      reachable = await isConnected();
+      await new Promise((r) => setTimeout(r, 1000));
+    }
     setLoading(false);
   };
 
@@ -46,9 +45,25 @@ const App: React.FC<Props> = (props) => {
     load();
   }, []);
 
-  if (loading) return <Loading />;
+  return (
+    <>
+      <AnimatePresence>
+        {loading && (
+          <motion.div transition={{ duration: 0.5 }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <Loading text={"Loading"} {...props} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-  return <Editor {...props} />;
+      <AnimatePresence>
+        {!loading && (
+          <motion.div transition={{ delay: 0.5, duration: 0.5 }} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
+            <Editor {...props} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
 };
 
 export default App;
@@ -60,9 +75,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   for (let i = 0; i < LANGUAGES.length; i++) {
     const lang = LANGUAGES[i];
-    const ldata = await fetch(
-      `https://raw.githubusercontent.com/hedyorg/hedy/main/content/adventures/${lang}.yaml`
-    ).then((response) => response.text());
+    const ldata = await fetch(`https://raw.githubusercontent.com/hedyorg/hedy/main/content/adventures/${lang}.yaml`).then((response) => response.text());
 
     const { adventures } = await yaml.load(ldata);
     data.languages[lang] = adventures;

@@ -1,9 +1,11 @@
-import { app, ipcMain } from "electron";
+import { spawn } from "child_process";
+import { app } from "electron";
 import serve from "electron-serve";
 import { createWindow } from "./helpers";
 const { exec } = require("child_process");
-const fs = require("fs");
 const isProd: boolean = process.env.NODE_ENV === "production";
+const detect = require("detect-port");
+import process from "process";
 
 if (isProd) {
   serve({ directory: "app" });
@@ -17,6 +19,9 @@ if (isProd) {
   const mainWindow = createWindow("main", {
     width: 1000,
     height: 600,
+    webPreferences: {
+      webSecurity: false, // This might be a security risk
+    },
   });
 
   if (isProd) {
@@ -24,59 +29,33 @@ if (isProd) {
   } else {
     const port = process.argv[2];
     await mainWindow.loadURL(`http://localhost:${port}/home`);
-    mainWindow.webContents.openDevTools();
   }
+
+  // Port to run server on
+  let port = 4444;
+
+  // Check if port is available and assigns a new one if not
+  port = await detect(port);
+
+  // Activate virtual environment and run hedy server
+  var child = spawn(`source venv/bin/activate && cd ./hedy && PORT=${port} python app.py`, {
+    shell: true,
+  });
+
+  child.stdout.on("data", (data) => {
+    console.log(`child stdout:\n${data}`);
+  });
+
+  child.stderr.on("data", (data) => {
+    console.error(`child stderr:\n${data}`);
+  });
+
+  // Kill server when app is closed
+  mainWindow.on("closed", () => {
+    exec(`kill -9 $(lsof -t -i:${port})`);
+    app.quit();
+  });
 })();
-
-ipcMain.handle("has-python3", async () => {
-  return new Promise((resolve, reject) => {
-    exec("python3 --version", (error) => {
-      if (error) {
-        resolve(false);
-        return;
-      }
-      resolve(true);
-    });
-  });
-});
-
-ipcMain.handle("has-venv", async () => {
-  if (fs.existsSync("./venv")) {
-    return true;
-  }
-  return false;
-});
-
-ipcMain.handle("create-venv", async () => {
-  return new Promise((resolve, reject) => {
-    exec(
-      "python3 -m venv venv && source venv/bin/activate && pip install -r ./hedy/requirements.txt",
-      (error, stdout, stderr) => {
-        if (error) {
-          resolve(false);
-          return;
-        }
-        resolve(true);
-      }
-    );
-  });
-});
-
-ipcMain.handle("run-hedy-server", async () => {
-  return new Promise((resolve, reject) => {
-    exec(
-      "source venv/bin/activate && cd ./hedy && python app.py",
-      (error, stdout, stderr) => {
-        if (error) {
-          console.log(error);
-          resolve(false);
-          return;
-        }
-        resolve(true);
-      }
-    );
-  });
-});
 
 app.on("window-all-closed", () => {
   app.quit();

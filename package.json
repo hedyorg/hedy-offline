@@ -11,8 +11,11 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "detect-port": "^1.5.1",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
+    "framer-motion": "^7.6.5",
+    "install": "^0.13.0",
     "markdown-to-jsx": "^7.1.7"
   },
   "devDependencies": {
