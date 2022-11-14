@@ -4,6 +4,7 @@ import CodePanel from "../../components/code-panel/code-panel";
 import { useRef, useState } from "react";
 import AppContext, { LANGUAGES } from "../../app-context";
 import { Props } from "../../types";
+import useResize from "../../hooks/useResize";
 
 const Editor: React.FC<Props> = (props) => {
   const [lang, setLang] = useState<typeof LANGUAGES[number]>("en");
@@ -31,12 +32,23 @@ const Editor: React.FC<Props> = (props) => {
 };
 
 const App: React.FC = () => {
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const resize = useResize(containerRef, buttonRef, true);
+
+  console.log(resize);
   return (
     <div>
       <Header />
-      <div className="grid grid-cols-2 h-screen">
-        <CodePanel />
-        <InfoPanel />
+      <div ref={containerRef} className="flex h-screen">
+        <div className="flex-1">
+          <CodePanel />
+        </div>
+        <div style={{ width: resize.distribution ? `${100 - resize.distribution * 100}%` : "50%" }} className="relative">
+          <div ref={buttonRef} className="h-full cursor-col-resize z-20 w-4 absolute left-0 top-0 -translate-x-1/2" />
+          <InfoPanel />
+        </div>
       </div>
     </div>
   );

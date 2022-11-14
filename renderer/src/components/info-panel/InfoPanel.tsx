@@ -8,53 +8,19 @@ const InfoPanel: React.FC<InfoPanelType> = (props) => {
   const { level } = useContext(AppContext);
 
   return (
-    <div className="p-4">
+    <div className="p-4 min-w-[500px] h-full relative shadow-2xl z-10 border-l border-neutral-100/40">
       <div className="flex gap-5 flex-col">
-        <ContentBlock
-          story={level.story_text}
-          code={level?.example_code}
-          showBorder={false}
-        />
+        <ContentBlock story={level.story_text} code={level?.example_code} showBorder={false} />
 
-        {level.story_text_2 && (
-          <ContentBlock
-            showBorder={true}
-            story={level.story_text_2}
-            code={level?.example_code_2}
-          />
-        )}
+        {level.story_text_2 && <ContentBlock showBorder={true} story={level.story_text_2} code={level?.example_code_2} />}
 
-        {level.story_text_3 && (
-          <ContentBlock
-            showBorder={true}
-            story={level.story_text_3}
-            code={level?.example_code_3}
-          />
-        )}
+        {level.story_text_3 && <ContentBlock showBorder={true} story={level.story_text_3} code={level?.example_code_3} />}
 
-        {level.story_text_4 && (
-          <ContentBlock
-            showBorder={true}
-            story={level.story_text_4}
-            code={level?.example_code_4}
-          />
-        )}
+        {level.story_text_4 && <ContentBlock showBorder={true} story={level.story_text_4} code={level?.example_code_4} />}
 
-        {level.story_text_5 && (
-          <ContentBlock
-            showBorder={true}
-            story={level.story_text_5}
-            code={level?.example_code_5}
-          />
-        )}
+        {level.story_text_5 && <ContentBlock showBorder={true} story={level.story_text_5} code={level?.example_code_5} />}
 
-        {level.story_text_6 && (
-          <ContentBlock
-            showBorder={true}
-            story={level.story_text_6}
-            code={level?.example_code_6}
-          />
-        )}
+        {level.story_text_6 && <ContentBlock showBorder={true} story={level.story_text_6} code={level?.example_code_6} />}
       </div>
     </div>
   );
