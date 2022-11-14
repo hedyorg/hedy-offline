@@ -1,5 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../../app-context";
+import { FiZap } from "react-icons/fi";
+import dynamic from "next/dynamic";
+const CodeEditor = dynamic(() => import("../code-editor/code-editor"), { ssr: false });
 
 interface CodePanelType {}
 
@@ -13,19 +16,16 @@ const CodePanel: React.FC<CodePanelType> = (props) => {
 
   return (
     <div className="w-full h-full relative">
-      <textarea
-        className="p-4 w-full"
-        onChange={(value) => setCode(value.target.value)}
-        value={code}
-      />
+      <CodeEditor setCode={(code) => setCode(code)} code={code} />
 
       <button
         onClick={() => {
           alert(appContext.code.current);
         }}
-        className="px-2 absolute bottom-12 right-4 py-1 bg-gray-200"
+        className="px-6 group flex items-center gap-2 text-xl tracking-wide font-semibold py-2 absolute bottom-8 right-12 bg-white border border-neutral-300 rounded-lg"
       >
-        Run Code
+        <FiZap className="group-hover:fill-[#E6D706] group-hover:text-[#E6D706] transition-all" size={"24px"} />
+        <span>Execute</span>
       </button>
     </div>
   );

@@ -13,13 +13,16 @@
   "dependencies": {
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/source-code-pro": "^4.5.12",
+    "ace-builds": "^1.13.0",
     "detect-port": "^1.5.1",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "framer-motion": "^7.6.5",
     "install": "^0.13.0",
     "markdown-to-jsx": "^7.1.7",
-    "react-icons": "^4.6.0"
+    "react-ace": "^10.1.0",
+    "react-icons": "^4.6.0",
+    "react-simple-code-editor": "^0.13.1"
   },
   "devDependencies": {
     "@types/node": "^16.11.7",
