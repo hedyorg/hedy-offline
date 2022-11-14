@@ -37,17 +37,23 @@ const App: React.FC = () => {
 
   const resize = useResize(containerRef, buttonRef, true);
 
-  console.log(resize);
   return (
-    <div>
+    <div className="h-screen flex flex-col overflow-hidden">
       <Header />
-      <div ref={containerRef} className="flex h-screen">
-        <div className="flex-1">
-          <CodePanel />
-        </div>
-        <div style={{ width: resize.distribution ? `${100 - resize.distribution * 100}%` : "50%" }} className="relative">
-          <div ref={buttonRef} className="h-full cursor-col-resize z-20 w-4 absolute left-0 top-0 -translate-x-1/2" />
-          <InfoPanel />
+      <div ref={containerRef} className="w-full flex-1 overflow-hidden">
+        <div className="flex h-full">
+          {/* EDITOR */}
+          <div className="flex-1 h-full">
+            <CodePanel />
+          </div>
+
+          {/* INFO PANEL */}
+          <div style={{ width: resize.distribution ? `${100 - resize.distribution * 100}%` : "50%" }} className="relative h-full">
+            <div ref={buttonRef} className="h-full z-50 cursor-col-resize w-12 absolute left-0 top-0 -translate-x-1/2 " />
+            <div className="relative overflow-scroll h-full z-10 border-l border-neutral-100/40 min-h-full">
+              <InfoPanel />
+            </div>
+          </div>
         </div>
       </div>
     </div>
