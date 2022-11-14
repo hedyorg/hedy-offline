@@ -38,7 +38,7 @@ if (isProd) {
   port = await detect(port);
 
   // Activate virtual environment and run hedy server
-  var child = spawn(`source venv/bin/activate && cd ./hedy && PORT=${port} python app.py`, {
+  var child = spawn(`cd ./hedy && PORT=${port} ../venv/bin/python app.py`, {
     shell: true,
   });
 
