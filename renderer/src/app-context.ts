@@ -11,6 +11,7 @@ const AppContext = createContext<{
   setAdventureId?: Dispatch<SetStateAction<string>>;
   setLevelId?: Dispatch<SetStateAction<string>>;
   code: MutableRefObject<string>;
+  levelId: string;
   languages: typeof LANGUAGES;
   adventures: {
     [key: string]: AdventureType;
@@ -24,6 +25,7 @@ const AppContext = createContext<{
   level: null,
   adventure: null,
   code: null,
+  levelId: null,
 });
 
 export default AppContext;

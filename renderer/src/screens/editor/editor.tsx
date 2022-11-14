@@ -18,6 +18,7 @@ const Editor: React.FC<Props> = (props) => {
         code,
         adventure: props.languages[lang][adventureId],
         level: props.languages[lang][adventureId].levels[levelId],
+        levelId,
         setAdventureId,
         setLevelId,
         adventures: props.languages[lang],

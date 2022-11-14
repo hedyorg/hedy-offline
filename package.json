@@ -11,12 +11,15 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
+    "@fontsource/poppins": "^4.5.10",
+    "@fontsource/source-code-pro": "^4.5.12",
     "detect-port": "^1.5.1",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
     "framer-motion": "^7.6.5",
     "install": "^0.13.0",
-    "markdown-to-jsx": "^7.1.7"
+    "markdown-to-jsx": "^7.1.7",
+    "react-icons": "^4.6.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.7",
