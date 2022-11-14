@@ -13,6 +13,7 @@
   "dependencies": {
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/source-code-pro": "^4.5.12",
+    "@headlessui/react": "^1.7.4",
     "ace-builds": "^1.13.0",
     "detect-port": "^1.5.1",
     "electron-serve": "^1.1.0",

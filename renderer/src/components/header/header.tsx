@@ -2,6 +2,7 @@ import { useContext } from "react";
 import AppContext from "../../app-context";
 import { FiSettings, FiChevronLeft } from "react-icons/fi";
 interface HeaderType {}
+import LanguagePicker from "../language-picker/language-picker";
 
 const Header: React.FC<HeaderType> = (props) => {
   const appContext = useContext(AppContext);
@@ -22,9 +23,7 @@ const Header: React.FC<HeaderType> = (props) => {
       </div>
 
       <div className="">
-        <button className="text-neutral-100 hover:rotate-45 hover:text-neutral-300 transition-all">
-          <FiSettings size={"22px"} />
-        </button>
+        <LanguagePicker />
       </div>
     </header>
   );
