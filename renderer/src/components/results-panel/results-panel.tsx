@@ -72,7 +72,7 @@ const ResultsPanel = () => {
       {output && !loading && (
         <div className="py-2 flex flex-col  gap-4">
           <Banner status={status} />
-          <Result errorLines={status === "error" ? errorLines : []} code={appContext.hedy} output={output} isError={false} />
+          <Result errorLines={status === "error" ? errorLines : []} code={appContext.hedy} output={output} isError={status === "error"} />
         </div>
       )}
     </div>
@@ -121,7 +121,7 @@ const Result: React.FC<ResultType> = (props) => {
           return <p>{line}</p>;
         })}
       </Code>
-      <p className="text-neutral-300 mt-4 text-sm font-bold font-mono uppercase">{props.isError ? "Error" : "Output"}</p>
+      <p className="text-neutral-300 mt-4 text-sm font-bold font-mono uppercase">{props.isError ? "Error Message" : "Output"}</p>
       <Code>{props.output}</Code>
     </div>
   );
