@@ -9,6 +9,7 @@ import { TbCheckupList, TbListCheck } from "react-icons/tb";
 import { Fragment } from "react";
 import { Tab } from "@headlessui/react";
 import ResultsPanel from "../../components/results-panel/results-panel";
+import { useEffect, useContext } from "react";
 
 const Editor: React.FC<Props> = (props) => {
   const [lang, setLang] = useState<typeof LANGUAGES[number]>("en");
@@ -60,43 +61,42 @@ const App: React.FC = () => {
 };
 
 const RightEditor: React.FC<{ containerRef: RefObject<HTMLDivElement> }> = (props) => {
+  const appContext = useContext(AppContext);
   const buttonRef = useRef<HTMLDivElement>(null);
   const resize = useResize(props.containerRef, buttonRef, true);
+  const [panel, setPanel] = useState<"info" | "results">("info");
+
+  useEffect(() => {
+    if (appContext.hedy) {
+      setPanel("results");
+    }
+  }, [appContext.hedy]);
 
   return (
     <div style={{ width: resize.distribution ? `${100 - resize.distribution * 100}%` : "50%" }} className="relative border-l border-neutral-100/40 h-full">
       <div ref={buttonRef} className="h-full z-50 cursor-col-resize w-12 absolute left-0 top-0 -translate-x-1/2 " />
 
-      <Tab.Group>
-        <Tab.List className={"flex gap-4 pt-6 pb-4  px-6 pr-12"}>
-          <Tab as={Fragment}>
-            {({ selected }) => (
-              /* Use the `selected` state to conditionally style the selected tab. */
-              <button className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${selected ? "bg-[#E1EBFF]" : ""} `}>
-                <TbCheckupList size={24} />
-                Instructions
-              </button>
-            )}
-          </Tab>
+      <div>
+        <div className={"flex gap-4 pt-6 pb-4  px-6 pr-12"}>
+          <button onClick={() => setPanel("info")} className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${panel === "info" ? "bg-[#E1EBFF]" : ""} `}>
+            <TbCheckupList size={24} />
+            Instructions
+          </button>
 
-          <Tab as={Fragment}>
-            {({ selected }) => (
-              <button className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${selected ? "bg-[#E1EBFF]" : ""} `}>
-                <TbListCheck size={24} />
-                Results
-              </button>
-            )}
-          </Tab>
-        </Tab.List>
-        <Tab.Panels className="relative overflow-scroll h-full z-10 min-h-full">
-          <Tab.Panel>
+          <button onClick={() => setPanel("results")} className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${panel === "results" ? "bg-[#E1EBFF]" : ""} `}>
+            <TbListCheck size={24} />
+            Results
+          </button>
+        </div>
+        <div className="relative overflow-scroll h-full z-10 min-h-full">
+          <div className={panel != "info" ? "hidden" : ""}>
             <InfoPanel />
-          </Tab.Panel>
-          <Tab.Panel>
+          </div>
+          <div className={panel != "results" ? "hidden" : ""}>
             <ResultsPanel />
-          </Tab.Panel>
-        </Tab.Panels>
-      </Tab.Group>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
