@@ -52,6 +52,7 @@ const App: React.FC<Props> = (props) => {
         <script type="text/javascript" src="skulpt.js"></script>
         <script type="text/javascript" src="skulpt-stdlib.js"></script>
         <script type="text/javascript">window.Sk = Sk;</script>
+        <title>Hedy Offline</title>
       </Head>
       <main>
         <AnimatePresence>
