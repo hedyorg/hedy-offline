@@ -24,6 +24,13 @@ export interface LevelType {
   example_code_6?: string;
 }
 
+export interface HedyResponse {
+  Code: string;
+  has_sleep: boolean;
+  Error?: string;
+  Location?: number[];
+}
+
 export type Props = {
   languages: {
     en?: {

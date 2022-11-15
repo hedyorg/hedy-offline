@@ -15,7 +15,9 @@ const CodeEditor: React.FC<CodeEditorType> = (props) => {
     <div className="w-full h-full">
       <AceEditor
         value={props.code}
-        onChange={(code) => props.setCode(code)}
+        onChange={(code) => {
+          props.setCode(code);
+        }}
         className="font-mono h-full"
         width="100%"
         height="100%"

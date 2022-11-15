@@ -3,23 +3,27 @@ import InfoPanel from "../../components/info-panel/InfoPanel";
 import CodePanel from "../../components/code-panel/code-panel";
 import { RefObject, useRef, useState } from "react";
 import AppContext, { LANGUAGES } from "../../app-context";
-import { Props } from "../../types";
+import { HedyResponse, Props } from "../../types";
 import useResize from "../../hooks/useResize";
 import { TbCheckupList, TbListCheck } from "react-icons/tb";
 import { Fragment } from "react";
 import { Tab } from "@headlessui/react";
+import ResultsPanel from "../../components/results-panel/results-panel";
 
 const Editor: React.FC<Props> = (props) => {
   const [lang, setLang] = useState<typeof LANGUAGES[number]>("en");
   const [adventureId, setAdventureId] = useState<string>("default");
   const [levelId, setLevelId] = useState<string>("1");
+  const [hedy, setHedy] = useState<string>(null);
+
   const code = useRef<string>("");
   return (
     <AppContext.Provider
       value={{
         lang,
         setLang,
-        code,
+        hedy,
+        setHedy,
         adventure: props.languages[lang][adventureId],
         level: props.languages[lang][adventureId].levels[levelId],
         levelId,
@@ -88,7 +92,9 @@ const RightEditor: React.FC<{ containerRef: RefObject<HTMLDivElement> }> = (prop
           <Tab.Panel>
             <InfoPanel />
           </Tab.Panel>
-          <Tab.Panel>Content 2</Tab.Panel>
+          <Tab.Panel>
+            <ResultsPanel />
+          </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>
