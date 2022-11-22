@@ -6,6 +6,7 @@ const { exec } = require("child_process");
 const isProd: boolean = process.env.NODE_ENV === "production";
 const detect = require("detect-port");
 import process from "process";
+import path from "path";
 
 if (isProd) {
   serve({ directory: "app" });
@@ -37,8 +38,16 @@ if (isProd) {
   // Check if port is available and assigns a new one if not
   port = await detect(port);
 
+  const resourcePath =
+    !process.env.NODE_ENV || process.env.NODE_ENV === "production"
+      ? process.resourcesPath // Live Mode
+      : __dirname; // Dev Mode
+
+  const hedyPath = path.join(resourcePath, "../hedy");
+  const pythonPath = path.join(resourcePath, "../venv/bin/python");
+
   // Activate virtual environment and run hedy server
-  var child = spawn(`cd ./hedy && PORT=${port} ../venv/bin/python app.py`, {
+  var child = spawn(`cd ${hedyPath} && PORT=${port} ${pythonPath} app.py`, {
     shell: true,
   });
 

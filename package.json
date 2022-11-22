@@ -10,6 +10,12 @@
     "build": "nextron build",
     "postinstall": "electron-builder install-app-deps"
   },
+  "build": {
+    "extraFiles": [
+      "hedy",
+      "venv"
+    ]
+  },
   "dependencies": {
     "@fontsource/poppins": "^4.5.10",
     "@fontsource/source-code-pro": "^4.5.12",
