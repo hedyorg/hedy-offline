@@ -7,31 +7,26 @@ import useResize from '../hooks/useResize'
 import { TbCheckupList, TbListCheck } from 'react-icons/tb'
 import ResultsPanel from '../components/results-panel/results-panel'
 import { useEffect, useContext } from 'react'
+import { useLoaderData } from 'react-router-dom'
 
-interface EditorProps {
-  adventures: AdventureCollectionType
-}
-
-const Editor: React.FC<EditorProps> = (props) => {
-  const [lang, setLang] = useState<typeof LANGUAGES[number]>('en')
-  const [adventureId, setAdventureId] = useState<string>('default')
-  const [levelId, setLevelId] = useState<string>('1')
+const Editor: React.FC = () => {
+  const { lang, adventure, level, levelId } = useLoaderData() as {
+    lang: typeof LANGUAGES[number]
+    adventure: AdventureType
+    level: LevelType
+    levelId: string
+  }
   const [hedy, setHedy] = useState<string>('')
 
   return (
     <AppContext.Provider
       value={{
+        levelId,
         lang,
-        setLang,
+        adventure,
+        level,
         hedy,
         setHedy,
-        adventure: props.adventures[lang].adventures[adventureId],
-        level: props.adventures[lang].adventures[adventureId].levels[levelId],
-        levelId,
-        setAdventureId,
-        setLevelId,
-        adventures: props.adventures[lang].adventures,
-        languages: LANGUAGES,
       }}
     >
       <App />

@@ -10,7 +10,7 @@ const LanguagePicker = () => {
   const [selectedLang, setSelectedLang] = useState(appContext.lang)
 
   useEffect(() => {
-    appContext.setLang!(selectedLang)
+    // appContext.setLang!(selectedLang)
   }, [selectedLang])
 
   return (
