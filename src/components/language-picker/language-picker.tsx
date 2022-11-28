@@ -6,7 +6,7 @@ import { GrFormCheckmark } from 'react-icons/gr'
 import { IoEarthOutline } from 'react-icons/io5'
 
 const LanguagePicker = () => {
-  const appContext = React.useContext(AppContext)
+  const appContext = React.useContext(AppContext)!
   const [selectedLang, setSelectedLang] = useState(appContext.lang)
 
   useEffect(() => {

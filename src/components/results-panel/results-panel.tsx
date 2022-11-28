@@ -2,17 +2,16 @@ import { useEffect, useContext, useState } from 'react'
 import { IoSettingsOutline } from 'react-icons/io5'
 import AppContext from '../../app-context'
 import { fetchHedy } from '../../helpers/fetchHedy'
-import getSkulpt from '../../helpers/getSkulpt'
 
 const ResultsPanel = () => {
-  const appContext = useContext(AppContext)
+  const appContext = useContext(AppContext)!
   const [output, setOutput] = useState<string | undefined>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [status, setStatus] = useState<'error' | 'succes' | 'waiting'>('succes')
   const [errorLines, setErrorLines] = useState<number[]>([])
 
   const run = async () => {
-    const res = await fetchHedy(appContext.hedy ?? '', appContext.levelId)
+    const res = await fetchHedy(appContext.hedy, appContext.levelId)
 
     // TODO CHECK FOR ERRORS
 
@@ -25,7 +24,7 @@ const ResultsPanel = () => {
 
     setStatus('succes')
 
-    const Sk = getSkulpt()
+    const Sk = window.Sk
     if (!Sk) return null
 
     const outf = (text: string) => {

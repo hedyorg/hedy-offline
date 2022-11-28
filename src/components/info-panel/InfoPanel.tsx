@@ -5,7 +5,7 @@ import Markdown from '../text/Text'
 interface InfoPanelType {}
 
 const InfoPanel: React.FC<InfoPanelType> = (props) => {
-  const { level } = useContext(AppContext)
+  const { level } = useContext(AppContext)!
   if (level === null) return <div />
 
   return (

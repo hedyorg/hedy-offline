@@ -5,7 +5,7 @@ interface HeaderType {}
 import LanguagePicker from '../language-picker/language-picker'
 
 const Header: React.FC<HeaderType> = (props) => {
-  const appContext = useContext(AppContext)
+  const appContext = useContext(AppContext)!
 
   return (
     <header className='bg-white relative flex justify-between items-center border-b px-12 border-neutral-100 pt-6 pb-4'>

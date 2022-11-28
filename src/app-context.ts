@@ -8,7 +8,7 @@ const AppContext = createContext<{
   setAdventureId: Dispatch<SetStateAction<string>>
   setLevelId: Dispatch<SetStateAction<string>>
   setHedy: Dispatch<SetStateAction<string>>
-  hedy?: string
+  hedy: string
   levelId: string
   languages: typeof LANGUAGES
   adventures: {

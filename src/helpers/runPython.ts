@@ -1,7 +1,5 @@
-import getSkulpt from './getSkulpt'
-
 export const runPython = async (code: string, level: string) => {
-  const Sk = getSkulpt()
+  const Sk = window.Sk
   if (!Sk) return null
 
   const outf = (text: string) => {

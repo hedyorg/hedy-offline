@@ -15,8 +15,10 @@ const App: React.FC = () => {
     var myHeaders = new Headers()
     myHeaders.append('Content-Type', 'application/json')
 
+    var port = await window.info.getPort()
+
     try {
-      const res = await fetch('http://localhost:4444/parse', {
+      const res = await fetch(`http://localhost:${port}/parse`, {
         method: 'POST',
         body: raw,
         redirect: 'follow',

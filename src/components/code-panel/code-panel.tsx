@@ -6,7 +6,7 @@ import CodeEditor from '../code-editor/code-editor'
 interface CodePanelType {}
 
 const CodePanel: React.FC<CodePanelType> = (props) => {
-  const appContext = useContext(AppContext)
+  const appContext = useContext(AppContext)!
   const [code, setCode] = useState(appContext.level!.start_code)
   const prevCode = useRef<string>('')
 
