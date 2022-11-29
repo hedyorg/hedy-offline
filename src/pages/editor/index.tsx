@@ -52,16 +52,16 @@ const App: React.FC = () => {
     }
   }
 
-  const x = useMotionValue(600)
+  const x = useMotionValue(400)
 
   const width = useTransform(x, (value) => {
-    if (x.get() < 500) {
-      return 500
+    if (x.get() < 300) {
+      return 300
     }
 
     if (container.current) {
-      if (x.get() > container.current!.getBoundingClientRect().width - 500) {
-        return container.current!.getBoundingClientRect().width - 500
+      if (x.get() > container.current!.getBoundingClientRect().width - 200) {
+        return container.current!.getBoundingClientRect().width - 200
       }
     }
 
@@ -83,9 +83,9 @@ const App: React.FC = () => {
           </div>
           <div
             onMouseDown={onMouseDown}
-            className={`h-full rounded-lg transition-colors ${
+            className={`h-full rounded-2xl transition-colors ${
               isMouseDown ? 'bg-neutral-100' : ''
-            } hover:bg-neutral-100 cursor-col-resize relative z-50 w-4`}
+            } hover:bg-neutral-100 bg-gray-100 cursor-col-resize relative z-50 w-3`}
           >
             <div
               className={`absolute w-full h-full scale-x-[100] z-50 ${
