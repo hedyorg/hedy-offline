@@ -52,7 +52,7 @@ const App: React.FC = () => {
     }
   }
 
-  const x = useMotionValue(400)
+  const x = useMotionValue(500)
 
   const width = useTransform(x, (value) => {
     if (x.get() < 300) {
