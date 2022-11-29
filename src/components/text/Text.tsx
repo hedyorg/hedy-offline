@@ -28,27 +28,16 @@ const Markdown: React.FC<MarkdownType> = (props) => {
 }
 
 const Code: React.FC<{ children: React.ReactNode }> = (props) => {
-  return <code className='italic'>{props.children}</code>
+  return <code className='italic pr-5 '>{props.children}</code>
 }
 
 const Pre: React.FC<{ children: React.ReactNode }> = (props) => {
   const ref = useRef<HTMLPreElement>(null)
   return (
-    <div className='w-full border relative rounded-md p-4'>
+    <div className='w-full border relative overflow-x-auto rounded-md p-4'>
       <pre ref={ref} className='w-full'>
         {props.children}
       </pre>
-
-      <button
-        onClick={() => {
-          if (ref.current) {
-            navigator.clipboard.writeText(ref.current.innerText)
-          }
-        }}
-        className='absolute right-4 bottom-2 bg-slate-300 px-4 py-1 rounded-md'
-      >
-        Copy
-      </button>
     </div>
   )
 }
