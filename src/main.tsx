@@ -38,10 +38,11 @@ const router = createBrowserRouter([
 
       if (params.adventureId && params.levelId && params.lang) {
         return {
-          adventure: adventures['en'].adventures[params.adventureId],
-          level: adventures['en'].adventures[params.adventureId].levels[params.levelId],
+          adventure: adventures[params.lang].adventures[params.adventureId],
+          level: adventures[params.lang].adventures[params.adventureId].levels[params.levelId],
           levelId: params.levelId,
           lang: params.lang,
+          adventureId: params.adventureId,
         }
       }
 
@@ -50,6 +51,7 @@ const router = createBrowserRouter([
         level: adventures['en'].adventures['default'].levels[0],
         levelId: 0,
         lang: 'en',
+        adventureId: 'default',
       }
     },
   },

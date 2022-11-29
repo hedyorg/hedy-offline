@@ -1,20 +1,16 @@
 import { Listbox } from '@headlessui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { LANGUAGES } from '../../app-context'
 import AppContext from '../../app-context'
 import { GrFormCheckmark } from 'react-icons/gr'
 import { IoEarthOutline } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
 
 const LanguagePicker = () => {
   const appContext = React.useContext(AppContext)!
-  const [selectedLang, setSelectedLang] = useState(appContext.lang)
-
-  useEffect(() => {
-    // appContext.setLang!(selectedLang)
-  }, [selectedLang])
 
   return (
-    <Listbox value={selectedLang} onChange={setSelectedLang} horizontal>
+    <Listbox value={appContext.lang} horizontal>
       {({ open }) => (
         <div>
           <Listbox.Button>
@@ -30,14 +26,16 @@ const LanguagePicker = () => {
               <Listbox.Option key={language} value={language}>
                 {({ selected }) => (
                   <li className={`group cursor-pointer font-mono hover:bg-blue-500 }`}>
-                    <div className='px-4 group-first:pt-2 group-last:pb-2 py-1'>
-                      <div className='flex gap-2 items-center'>
-                        <div className={`${selected ? 'opacity-100' : 'opacity-0'}`}>
-                          <GrFormCheckmark size={24} />
+                    <Link to={`/editor/${language}/default/1`}>
+                      <div className='px-4 group-first:pt-2 group-last:pb-2 py-1'>
+                        <div className='flex gap-2 items-center'>
+                          <div className={`${selected ? 'opacity-100' : 'opacity-0'}`}>
+                            <GrFormCheckmark size={24} />
+                          </div>
+                          {getLanguage(language)}
                         </div>
-                        {getLanguage(language)}
                       </div>
-                    </div>
+                    </Link>
                   </li>
                 )}
               </Listbox.Option>

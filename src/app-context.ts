@@ -8,6 +8,7 @@ const AppContext = createContext<{
   hedy: string
   levelId: string
   adventure: AdventureType
+  adventureId: string
   level: LevelType
 } | null>(null)
 

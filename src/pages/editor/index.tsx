@@ -8,11 +8,12 @@ import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
 import { useContext } from 'react'
 
 const Editor: React.FC = () => {
-  const { lang, adventure, level, levelId } = useLoaderData() as {
+  const { lang, adventure, level, levelId, adventureId } = useLoaderData() as {
     lang: typeof LANGUAGES[number]
     adventure: AdventureType
     level: LevelType
     levelId: string
+    adventureId: string
   }
   const [hedy, setHedy] = useState<string>('')
 
@@ -22,6 +23,7 @@ const Editor: React.FC = () => {
         levelId,
         lang,
         adventure,
+        adventureId,
         level,
         hedy,
         setHedy,
