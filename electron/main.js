@@ -13,8 +13,10 @@ let port = 4444
 
 const createWindow = async () => {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 750,
+    minWidth: 1100,
+    minHeight: 800,
     webPreferences: {
       webSecurity: false,
       preload: path.join(__dirname, 'preload.js'),

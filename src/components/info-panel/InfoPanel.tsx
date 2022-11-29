@@ -11,25 +11,27 @@ const InfoPanel: React.FC<InfoPanelType> = (props) => {
   return (
     <div className='w-full h-full min-w-[500px] max-w-[700px] p-6 pt-2 pr-12'>
       <div className='flex gap-5 flex-col'>
-        <ContentBlock story={level.story_text} code={level?.example_code} showBorder={false} />
+        {level?.story_text && (
+          <ContentBlock story={level.story_text} code={level?.example_code} showBorder={false} />
+        )}
 
-        {level.story_text_2 && (
+        {level?.story_text_2 && (
           <ContentBlock showBorder={true} story={level.story_text_2} code={level?.example_code_2} />
         )}
 
-        {level.story_text_3 && (
+        {level?.story_text_3 && (
           <ContentBlock showBorder={true} story={level.story_text_3} code={level?.example_code_3} />
         )}
 
-        {level.story_text_4 && (
+        {level?.story_text_4 && (
           <ContentBlock showBorder={true} story={level.story_text_4} code={level?.example_code_4} />
         )}
 
-        {level.story_text_5 && (
+        {level?.story_text_5 && (
           <ContentBlock showBorder={true} story={level.story_text_5} code={level?.example_code_5} />
         )}
 
-        {level.story_text_6 && (
+        {level?.story_text_6 && (
           <ContentBlock showBorder={true} story={level.story_text_6} code={level?.example_code_6} />
         )}
 

@@ -12,8 +12,20 @@ import './styles/globals.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Editor from './pages/editor'
+import Home from './pages/home'
 
 const router = createBrowserRouter([
+  {
+    path: '/level-picker/:level',
+    element: <Home />,
+    loader: async ({ params }) => {
+      const adventures = await window.info.getAdventures()
+      return {
+        adventures: adventures,
+        level: params.level,
+      }
+    },
+  },
   {
     path: '/',
     element: <Loading />,

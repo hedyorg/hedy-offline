@@ -34,7 +34,7 @@ const Loading: React.FC = () => {
       reachable = await isConnected()
       await new Promise((r) => setTimeout(r, 1000))
     }
-    navigate('/editor/en/default/2')
+    navigate('/level-picker/1')
   }
 
   useEffect(() => {

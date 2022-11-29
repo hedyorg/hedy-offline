@@ -52,16 +52,16 @@ const App: React.FC = () => {
     }
   }
 
-  const x = useMotionValue(400)
+  const x = useMotionValue(600)
 
   const width = useTransform(x, (value) => {
-    if (x.get() < 200) {
-      return 200
+    if (x.get() < 500) {
+      return 500
     }
 
     if (container.current) {
-      if (x.get() > container.current!.getBoundingClientRect().width - 200) {
-        return container.current!.getBoundingClientRect().width - 200
+      if (x.get() > container.current!.getBoundingClientRect().width - 500) {
+        return container.current!.getBoundingClientRect().width - 500
       }
     }
 
