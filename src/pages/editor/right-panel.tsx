@@ -15,40 +15,39 @@ const RightPanel: React.FC = (props) => {
   }, [appContext!.hedy])
 
   return (
-    <div>
-      <div>
-        <div className={'flex gap-4 pt-6 pb-4  px-6 pr-12'}>
-          <button
-            onClick={() => setPanel('info')}
-            className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${
-              panel === 'info' ? 'bg-[#E1EBFF]' : ''
-            } `}
-          >
-            <TbCheckupList size={24} />
-            Instructions
-          </button>
+    <div className='flex flex-col gap-6'>
+      <div className={'flex gap-4 pt-6  px-6 pr-12'}>
+        <button
+          onClick={() => setPanel('info')}
+          className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${
+            panel === 'info' ? 'bg-[#E1EBFF]' : ''
+          } `}
+        >
+          <TbCheckupList size={24} />
+          Instructions
+        </button>
 
-          <button
-            onClick={() => setPanel('results')}
-            className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${
-              panel === 'results' ? 'bg-[#E1EBFF]' : ''
-            } `}
-          >
-            <TbListCheck size={24} />
-            Results
-          </button>
+        <button
+          onClick={() => setPanel('results')}
+          className={`font-bold flex items-center gap-2 text-neutral-300 text-[18px] tracking-normal px-5 py-2 rounded-3xl ${
+            panel === 'results' ? 'bg-[#E1EBFF]' : ''
+          } `}
+        >
+          <TbListCheck size={24} />
+          Results
+        </button>
+      </div>
+
+      {/* CONTENT */}
+      <div className='relative'>
+        <div className={panel != 'info' ? 'hidden' : ''}>
+          <InfoPanel />
         </div>
-        <div className='relative overflow-scroll h-full z-10 min-h-full'>
-          <div className={panel != 'info' ? 'hidden' : ''}>
-            <InfoPanel />
-          </div>
-          <div className={panel != 'results' ? 'hidden' : ''}>
-            <ResultsPanel />
-          </div>
+        <div className={panel != 'results' ? 'hidden' : ''}>
+          <ResultsPanel />
         </div>
       </div>
     </div>
   )
 }
-
 export default RightPanel

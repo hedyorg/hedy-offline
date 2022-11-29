@@ -9,7 +9,7 @@ const InfoPanel: React.FC<InfoPanelType> = (props) => {
   if (level === null) return <div />
 
   return (
-    <div className='w-full h-full min-w-[500px] max-w-[700px] p-6 pt-2 pr-12'>
+    <div className='w-full h-full p-6 pt-2 pr-12'>
       <div className='flex gap-5 flex-col'>
         {level?.story_text && (
           <ContentBlock story={level.story_text} code={level?.example_code} showBorder={false} />

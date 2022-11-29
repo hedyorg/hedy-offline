@@ -1,10 +1,11 @@
 import Header from '../../components/header/header'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AppContext, { LANGUAGES } from '../../app-context'
 import { useLoaderData } from 'react-router-dom'
 import RightPanel from './right-panel'
 import LeftPanel from './left-panel'
 import { animate, motion, useMotionValue, useTransform } from 'framer-motion'
+import { useContext } from 'react'
 
 const Editor: React.FC = () => {
   const { lang, adventure, level, levelId } = useLoaderData() as {
@@ -35,6 +36,7 @@ const App: React.FC = () => {
   const container = useRef<HTMLDivElement>(null)
   const [isMouseDown, setIsMouseDown] = useState(false)
   var r = document.querySelector(':root') as HTMLElement
+  const appContext = useContext(AppContext)!
 
   const onMouseDown = () => {
     r.style.setProperty('--text-selection', 'none')
@@ -52,7 +54,7 @@ const App: React.FC = () => {
     }
   }
 
-  const x = useMotionValue(500)
+  const x = useMotionValue(600)
 
   const width = useTransform(x, (value) => {
     if (x.get() < 300) {
@@ -67,6 +69,12 @@ const App: React.FC = () => {
 
     return value
   })
+
+  useEffect(() => {
+    if (x.get() < 600) {
+      animate(x, 600, { ease: 'easeOut' })
+    }
+  }, [appContext.hedy])
 
   return (
     <div
@@ -94,7 +102,9 @@ const App: React.FC = () => {
             />
           </div>
           <motion.div layout className='overflow-y-auto relative' style={{ width }}>
-            <RightPanel />
+            <div className='min-w-[600px]'>
+              <RightPanel />
+            </div>
           </motion.div>
         </div>
       </div>
