@@ -103,8 +103,8 @@ const App: React.FC = () => {
               }`}
             />
           </div>
-          <motion.div layout className='overflow-y-auto relative' style={{ width }}>
-            <div className='min-w-[600px]'>
+          <motion.div layout className='overflow-y-auto  relative' style={{ width }}>
+            <div className='min-w-[600px] h-full'>
               <RightPanel />
             </div>
           </motion.div>

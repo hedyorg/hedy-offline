@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext, useState, useRef } from 'react'
 import { IoSettingsOutline } from 'react-icons/io5'
 import AppContext from '../../app-context'
 import { fetchHedy } from '../../helpers/fetchHedy'
@@ -9,9 +9,12 @@ const ResultsPanel = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [status, setStatus] = useState<'error' | 'succes' | 'waiting'>('succes')
   const [errorLines, setErrorLines] = useState<number[]>([])
+  const [showInput, setShowInput] = useState(false)
+  const setinput = useRef<any>(null)
 
   const run = async () => {
     const res = await fetchHedy(appContext.hedy, appContext.levelId)
+    setOutput('')
 
     // TODO CHECK FOR ERRORS
 
@@ -22,22 +25,42 @@ const ResultsPanel = () => {
       return
     }
 
+    async function setInput(promt: string): Promise<string> {
+      if (loading) setLoading(false)
+      setShowInput(true)
+
+      const x1 = new Promise<string>((res) => {
+        setinput.current = (text: string) => res(text)
+      })
+
+      const x2 = new Promise<string>((res) => {
+        setTimeout(() => {
+          res('')
+        }, 10000)
+      })
+
+      const x = await Promise.race([x1, x2])
+
+      setShowInput(false)
+
+      return x
+    }
+
     setStatus('succes')
 
     const Sk = window.Sk
-    if (!Sk) return null
 
-    const outf = (text: string) => {
-      setOutput((prev) => {
-        prev = prev ? prev : ''
-        return prev + text
-      })
-    }
+    Sk.configure({
+      output: (text: string) => setOutput((prev) => prev + text),
+      inputfun: setInput,
+      inputfunTakesPrompt: true,
+      __future__: Sk.python3,
+    })
 
-    Sk.configure({ output: outf })
-
-    Sk.misceval.asyncToPromise(function () {
-      return Sk.importMainWithBody('<stdin>', false, res.Code, true)
+    Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, res.Code, true), {
+      '*': () => {
+        // We don't do anything here...
+      },
     })
   }
 
@@ -80,7 +103,7 @@ const ResultsPanel = () => {
       )}
 
       {output && !loading && (
-        <div className='py-2 flex flex-col  gap-4'>
+        <div className='py-2 flex flex-col relative h-full gap-4'>
           <Banner status={status} />
           <Result
             errorLines={status === 'error' ? errorLines : []}
@@ -88,6 +111,22 @@ const ResultsPanel = () => {
             output={output}
             isError={status === 'error'}
           />
+
+          {showInput && (
+            <div className=' h-24 flex bg-gray-200 overflow-hidden rounded-xl shadow-2xl fixed bottom-12 w-[400px]'>
+              <input className='flex-1 outline-none' />
+              <button
+                onClick={() => {
+                  setinput.current('Hello World')
+                }}
+                className='h-12 '
+              >
+                Submit
+              </button>
+            </div>
+          )}
+
+          <div className='h-40' />
         </div>
       )}
     </div>

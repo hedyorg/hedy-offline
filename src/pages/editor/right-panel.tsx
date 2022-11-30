@@ -15,7 +15,7 @@ const RightPanel: React.FC = (props) => {
   }, [appContext!.hedy])
 
   return (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-6 h-full'>
       <div className={'flex gap-4 pt-6  px-6 pr-12'}>
         <button
           onClick={() => setPanel('info')}
@@ -39,11 +39,11 @@ const RightPanel: React.FC = (props) => {
       </div>
 
       {/* CONTENT */}
-      <div className='relative'>
+      <div className='relative h-full '>
         <div className={panel != 'info' ? 'hidden' : ''}>
           <InfoPanel />
         </div>
-        <div className={panel != 'results' ? 'hidden' : ''}>
+        <div className={panel != 'results' ? 'hidden' : 'h-full'}>
           <ResultsPanel />
         </div>
       </div>
