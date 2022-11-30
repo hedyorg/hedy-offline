@@ -7,7 +7,7 @@ interface CodePanelType {}
 
 const CodePanel: React.FC<CodePanelType> = (props) => {
   const appContext = useContext(AppContext)!
-  const [code, setCode] = useState(appContext.level!.start_code)
+  const [code, setCode] = useState(appContext.level?.start_code ?? '')
   const prevCode = useRef<string>('')
 
   return (
