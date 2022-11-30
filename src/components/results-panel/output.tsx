@@ -1,16 +1,13 @@
+import { useContext } from 'react'
+import AppContext from '../../app-context'
 import Banner from '../../banner'
-import Console from '../console'
+import Console from './console'
+import ResultsContext from './context'
 
-interface OutputProps {
-  isLoading: boolean
-  status: 'succes' | 'error' | 'pending'
-  errorLines?: number[]
-  code: string
-  output: string
-  showInput: boolean
-}
+const Output: React.FC = () => {
+  const props = useContext(ResultsContext)!
+  const appContext = useContext(AppContext)!
 
-const Output: React.FC<OutputProps> = (props) => {
   return (
     <div className='py-2 pb-[500px] flex flex-col relative h-full gap-4'>
       <Banner
@@ -22,7 +19,7 @@ const Output: React.FC<OutputProps> = (props) => {
 
       <Console
         errorLines={props.status === 'error' ? props?.errorLines : []}
-        code={props.code}
+        code={appContext.hedy}
         output={props.output}
         isError={props.status === 'error'}
         showInput={props.showInput}

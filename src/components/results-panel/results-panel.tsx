@@ -3,28 +3,31 @@ import AppContext from '../../app-context'
 import { fetchHedy } from '../../helpers/fetchHedy'
 import Loading from './loading'
 import Output from './output'
+import ResultsContext from './context'
 
 const ResultsPanel = () => {
   const appContext = useContext(AppContext)!
-  const [output, setOutput] = useState<string | undefined>('')
+  const [output, setOutput] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [status, setStatus] = useState<'error' | 'succes' | 'pending'>('succes')
   const [errorLines, setErrorLines] = useState<number[]>([])
   const [showInput, setShowInput] = useState(false)
-  const setinput = useRef<any>(null)
+  const onSubmit = useRef<any>(null)
+  const inputPromt = useRef<any>(null)
 
   async function setInput(promt: string): Promise<string> {
     setLoading(false)
     setShowInput(true)
 
     const x1 = new Promise<string>((res) => {
-      setinput.current = (text: string) => res(text)
+      inputPromt.current = promt
+      onSubmit.current = (text: string) => res(text)
     })
 
     const x2 = new Promise<string>((res) => {
       setTimeout(() => {
         res('Default Input')
-      }, 10000)
+      }, 20000)
     })
 
     const x = await Promise.race([x1, x2])
@@ -76,21 +79,35 @@ const ResultsPanel = () => {
     }
   }, [appContext.hedy])
 
-  return (
-    <div className='w-full h-full relative px-6'>
-      {(!output || loading) && <Loading isLoading={loading} />}
+  useEffect(() => {
+    if (showInput) {
+      const input = document.getElementById('input') as HTMLInputElement
+      input.scrollIntoView()
+    }
+  }, [showInput])
 
-      {output && !loading && (
-        <Output
-          isLoading={loading}
-          status={status}
-          code={appContext.hedy}
-          output={output}
-          showInput={showInput}
-          errorLines={errorLines}
-        />
-      )}
-    </div>
+  return (
+    <ResultsContext.Provider
+      value={{
+        output,
+        loading,
+        status,
+        errorLines,
+        showInput,
+        setLoading,
+        setOutput,
+        setStatus,
+        setErrorLines,
+        setShowInput,
+        promt: inputPromt,
+        onSubmit,
+      }}
+    >
+      <div className='w-full h-full relative px-6'>
+        {(!output || loading) && <Loading />}
+        {output && !loading && <Output />}
+      </div>
+    </ResultsContext.Provider>
   )
 }
 
