@@ -11,9 +11,11 @@ const ResultsPanel = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [status, setStatus] = useState<'error' | 'succes' | 'pending'>('succes')
   const [errorLines, setErrorLines] = useState<number[]>([])
+  const [hasTurtle, setHasTurtle] = useState<boolean>(false)
   const [showInput, setShowInput] = useState(false)
   const onSubmit = useRef<any>(null)
   const inputPromt = useRef<any>(null)
+  const [hasRun, setHasRun] = useState<boolean>(false)
 
   async function setInput(promt: string): Promise<string> {
     setLoading(false)
@@ -37,6 +39,13 @@ const ResultsPanel = () => {
     return x
   }
 
+  function builtinRead(x: any) {
+    const Sk = window.Sk
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles['files'][x] === undefined)
+      throw "File not found: '" + x + "'"
+    return Sk.builtinFiles['files'][x]
+  }
+
   const run = async () => {
     const res = await fetchHedy(appContext.hedy, appContext.levelId)
     setOutput('')
@@ -56,12 +65,18 @@ const ResultsPanel = () => {
     Sk.configure({
       output: (text: string) => setOutput((prev) => prev + text),
       inputfun: setInput,
+      read: builtinRead,
       inputfunTakesPrompt: true,
       __future__: Sk.python3,
     })
 
-    const code = normal_prefix + res.Code
-    setOutput('')
+    let code = normal_prefix + res.Code
+
+    if (res.has_turtle) {
+      code = turtle_prefix + code
+      setHasTurtle(true)
+    }
+
     setLoading(false)
 
     await Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, code, true), {
@@ -76,16 +91,13 @@ const ResultsPanel = () => {
   useEffect(() => {
     if (appContext.hedy) {
       setLoading(true)
+      setHasRun(true)
+      setHasTurtle(false)
+      setShowInput(false)
+      setOutput('')
       run()
     }
   }, [appContext.hedy])
-
-  useEffect(() => {
-    if (showInput) {
-      const input = document.getElementById('input') as HTMLInputElement
-      if (input) input.scrollIntoView()
-    }
-  }, [showInput])
 
   return (
     <ResultsContext.Provider
@@ -102,11 +114,16 @@ const ResultsPanel = () => {
         setShowInput,
         promt: inputPromt,
         onSubmit,
+        hasTurtle,
+        setHasTurtle,
       }}
     >
       <div className='w-full h-full relative px-6'>
-        {(!output || loading) && <Loading />}
-        {output && !loading && <Output />}
+        {(!hasRun || loading) && <Loading />}
+
+        <div className={`${hasRun && !loading ? '' : 'hidden'}`}>
+          <Output />
+        </div>
       </div>
     </ResultsContext.Provider>
   )
@@ -157,4 +174,16 @@ def convert_numerals(alphabet, number):
     return ''.join(all_numerals_converted)
   else:
     return number
+`
+
+const turtle_prefix = `# coding=utf8
+import random, time, turtle
+t = turtle.Turtle()
+t.shape("turtle")
+t.hideturtle()
+t.penup()
+t.left(90)
+t.pendown()
+t.speed(3)
+t.showturtle()
 `

@@ -9,7 +9,7 @@ const Output: React.FC = () => {
   const appContext = useContext(AppContext)!
 
   return (
-    <div className='py-2 pb-[500px] flex flex-col relative h-full gap-4'>
+    <div className='py-2 flex flex-col relative h-full gap-4'>
       <Banner
         status={props.status}
         errorContent='There was an error running your code'
@@ -17,13 +17,9 @@ const Output: React.FC = () => {
         pendingContent='Your code is running...'
       />
 
-      <Console
-        errorLines={props.status === 'error' ? props?.errorLines : []}
-        code={appContext.hedy}
-        output={props.output}
-        isError={props.status === 'error'}
-        showInput={props.showInput}
-      />
+      <Console />
+
+      <div className='h-12' />
     </div>
   )
 }

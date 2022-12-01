@@ -13,6 +13,8 @@ const ResultsContext = createContext<{
   setShowInput: Dispatch<SetStateAction<boolean>>
   onSubmit: any
   promt: any
+  hasTurtle: boolean
+  setHasTurtle: Dispatch<SetStateAction<boolean>>
 } | null>(null)
 
 export default ResultsContext

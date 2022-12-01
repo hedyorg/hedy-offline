@@ -45,7 +45,8 @@ declare global {
 
   interface HedyResponse {
     Code: string
-    has_sleep: boolean
+    has_sleep?: boolean
+    has_turtle?: boolean
     Error?: string
     Location?: number[]
   }
