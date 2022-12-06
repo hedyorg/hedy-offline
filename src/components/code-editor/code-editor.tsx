@@ -30,6 +30,7 @@ const CodeEditor: React.FC<CodeEditorType> = (props) => {
           enableBasicAutocompletion: true,
           enableLiveAutocompletion: true,
           enableSnippets: true,
+          highlightActiveLine: false,
         }}
       />
       ,
