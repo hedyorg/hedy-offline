@@ -1,35 +1,32 @@
-const colors = require('tailwindcss/colors')
+import { white as _white, gray as _gray, blue as _blue } from "tailwindcss/colors";
 
-module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}', 'index.html'],
+export const content = ["./src/**/*.{js,ts,jsx,tsx}", "index.html"];
+export const theme = {
+  fontFamily: {
+    sans: ["ui-sans-serif", "system-ui"],
+    mono: "Source Code Pro",
+  },
 
-  theme: {
-    fontFamily: {
-      sans: ['ui-sans-serif', 'system-ui'],
-      mono: 'Source Code Pro',
+  colors: {
+    // use colors only specified
+    white: _white,
+    gray: _gray,
+    blue: _blue,
+    neutral: {
+      100: "#5c5589",
+      200: "#3f3a5a",
+      300: "#130b43",
     },
 
-    colors: {
-      // use colors only specified
-      white: colors.white,
-      gray: colors.gray,
-      blue: colors.blue,
-      neutral: {
-        100: '#5c5589',
-        200: '#3f3a5a',
-        300: '#130b43',
-      },
-
-      select: {
-        custom: 'none',
-      },
-    },
-
-    extend: {
-      animation: {
-        'spin-slow': 'spin 3s linear infinite',
-      },
+    select: {
+      custom: "none",
     },
   },
-  plugins: [],
-}
+
+  extend: {
+    animation: {
+      "spin-slow": "spin 3s linear infinite",
+    },
+  },
+};
+export const plugins = [];
