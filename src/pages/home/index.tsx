@@ -54,7 +54,7 @@ const Home: React.FC = () => {
           {levels.map((l) => {
             const isSelected = l === currentLevel;
             return (
-              <button onClick={() => setCurrentLevel(l)} className={`border rounded-full transition-colors grid place-items-center aspect-square flex-1 ${isSelected ? "bg-blue-200" : ""}`}>
+              <button key={l} onClick={() => setCurrentLevel(l)} className={`border rounded-full transition-colors grid place-items-center aspect-square flex-1 ${isSelected ? "bg-blue-200" : ""}`}>
                 {l}
               </button>
             );
@@ -64,7 +64,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-2  gap-5">
             {getAdventures(currentLevel).map((a) => {
               return (
-                <Link to={`/editor/en/${a.id}/${currentLevel}`}>
+                <Link key={a.id} to={`/editor/en/${a.id}/${currentLevel}`}>
                   <div className="bg-gray-100 h-full p-4 rounded-xl">
                     <p className="font-bold">{a.adventure.name}</p>
                     <p>{a.adventure.description}</p>
