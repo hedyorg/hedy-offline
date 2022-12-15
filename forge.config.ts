@@ -11,6 +11,7 @@ import { rendererConfig } from "./webpack.renderer.config";
 const config: ForgeConfig = {
   packagerConfig: {
     extraResource: ["./venv", "./hedy"],
+    icon: "./public/images/icon/icon",
   },
   publishers: [
     {
