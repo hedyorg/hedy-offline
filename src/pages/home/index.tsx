@@ -36,7 +36,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto py-12">
+    <div className="container px-4 mx-auto py-12">
       <div className="flex flex-col items-center justify-center gap-5">
         <img className="w-[150px]" src="public/images/logo.png" />
         <h1 className="w-full text-center font-bold text-4xl">Hedy Offline</h1>
