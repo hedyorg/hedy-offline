@@ -6,6 +6,28 @@ Hedy-Offline is built using [Electron](https://www.electronjs.org/) and [React](
 
 Please note that not all features of Hedy may be available in Hedy-Offline. However, we strive to include as many of the original features as possible.
 
+# Development
+
+To get started with development, follow these steps:
+
+```bash
+git clone https://github.com/moesmoesie/hedy-offline.git
+yarn install
+python3.7 -m venv venv
+
+# Windows
+venv\Scripts\activate.bat
+
+# Unix or Linux
+source venv/bin/activate
+
+pip install -r ./hedy/requirements.txt
+yarn start
+```
+
+This will start the development server and allow you to view and work on the code locally. Note that the command to activate the virtual environment may vary depending on your operating system and make sure that `python3.7` is in your system's path.
+
+
 ## Contribute
 
 If you're interested in contributing to the development of Hedy-Offline, we'd love to have your help! Here are some ways you can contribute:
