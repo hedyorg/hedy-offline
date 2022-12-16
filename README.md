@@ -6,7 +6,7 @@ Hedy-Offline is built using [Electron](https://www.electronjs.org/) and [React](
 
 Please note that not all features of Hedy may be available in Hedy-Offline. However, we strive to include as many of the original features as possible.
 
-# Development
+## Development
 
 To get started with development, follow these steps:
 
