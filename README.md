@@ -27,6 +27,10 @@ yarn start
 
 This will start the development server and allow you to view and work on the code locally. Note that the command to activate the virtual environment may vary depending on your operating system and make sure that `python3.7` is in your system's path.
 
+## Downloading Hedy-Offline
+To download the latest release of Hedy-Offline, visit the [release page](https://github.com/moesmoesie/hedy-offline/releases). From there, you can download the executable. Please note that the current release version only works on MacOS.
+
+Once the download is complete, extract the package and run the executable to launch Hedy-Offline.
 
 ## Contribute
 
