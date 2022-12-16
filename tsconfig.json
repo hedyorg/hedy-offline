@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "jsx": "react-jsx",
-    "module": "commonjs",
     "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "incremental": true,
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "outDir": "dist",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "isolatedModules": true,
+    "jsx": "preserve"
   },
-  "include": ["src/**/*", "global.d.ts"]
+  "exclude": ["node_modules", "next.config.js", "app", "dist", ".next"],
+  "include": ["next-env.d.ts", "./main/**/*.ts", "./src/**/*.ts", "./src/**/*.tsx", "global.d.ts"]
 }
