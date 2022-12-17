@@ -19,6 +19,8 @@
     "electron-store": "^8.1.0",
     "framer-motion": "^7.10.2",
     "js-yaml": "^4.1.0",
+    "markdown-to-jsx": "^7.1.8",
+    "react-ace": "^10.1.0",
     "react-icons": "^4.7.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FiChevronLeft } from "react-icons/fi";
-import LanguagePicker from "../LanguagePicker/LanguagePicker";
+import LanguagePicker from "../LanguagePicker";
 import EditorContext from "./Editor.Context";
 import Link from "next/link";
 import { useRouter } from "next/router";

@@ -1,5 +1,8 @@
 import getAdventures from "../../../../helpers/getAdventures";
-import Editor from "../../../../components/Editor/Editor";
+
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("../../../../components/Editor"), { ssr: false });
 
 interface AdventureProps {
   adventure: AdventureType;
@@ -11,7 +14,11 @@ interface AdventureProps {
 }
 
 const Adventure: React.FC<AdventureProps> = (props) => {
-  return <Editor {...props} />;
+  return (
+    <div className="h-screen w-screen">
+      <Editor {...props} />
+    </div>
+  );
 };
 
 export default Adventure;
