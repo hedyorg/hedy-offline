@@ -1,6 +1,8 @@
 import getAdventures from "../../../../helpers/getAdventures";
 
 import dynamic from "next/dynamic";
+import Head from "next/head";
+import Script from "next/script";
 
 const Editor = dynamic(() => import("../../../../components/Editor"), { ssr: false });
 
@@ -15,9 +17,15 @@ interface AdventureProps {
 
 const Adventure: React.FC<AdventureProps> = (props) => {
   return (
-    <div className="h-screen w-screen">
-      <Editor {...props} />
-    </div>
+    <>
+      <Head>
+        <script type="text/javascript" src="/skulpt.js"></script>
+      </Head>
+
+      <main className="h-screen w-screen">
+        <Editor {...props} />
+      </main>
+    </>
   );
 };
 

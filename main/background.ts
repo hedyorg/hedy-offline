@@ -23,8 +23,8 @@ if (isProd) {
   const mainWindow = createWindow("main", {
     height: 1000,
     width: 1000,
-    minHeight: 800,
-    minWidth: 800,
+    minHeight: 300,
+    minWidth: 300,
     webPreferences: {
       webSecurity: false,
       allowRunningInsecureContent: true,
