@@ -11,13 +11,12 @@ interface runPythonProps {
   onError: (error: string, lines?: number[]) => void;
   onSleep: (time: number) => void;
   onComplete: () => void;
+  isOnline: boolean;
 }
 
 const runPython = async (props: runPythonProps) => {
   const { sk, code, level, port, setOutput, setInput, setHasTurtle, onError, onComplete } = props;
-  const hedyResponse = await fetchHedy(code, level, port);
-
-  console.log(sk);
+  const hedyResponse = await fetchHedy(code, level, port, props.isOnline);
 
   if (hedyResponse.Error) {
     onError(hedyResponse.Error, hedyResponse.Location);

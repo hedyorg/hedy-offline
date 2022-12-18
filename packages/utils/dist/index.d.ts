@@ -1,4 +1,4 @@
-declare const fetchHedy: (code: string, level: string, port: string) => Promise<HedyResponse>;
+declare const fetchHedy: (code: string, level: string, port: string, isOnline: boolean) => Promise<HedyResponse>;
 
 interface runPythonProps {
     sk: any;
@@ -11,6 +11,7 @@ interface runPythonProps {
     onError: (error: string, lines?: number[]) => void;
     onSleep: (time: number) => void;
     onComplete: () => void;
+    isOnline: boolean;
 }
 declare const runPython: (props: runPythonProps) => Promise<void>;
 

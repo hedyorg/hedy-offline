@@ -1,5 +1,5 @@
-const fetchHedy = async (code: string, level: string, port: string): Promise<HedyResponse> => {
-  const url = `http://localhost:${port}/parse`;
+const fetchHedy = async (code: string, level: string, port: string, isOnline: boolean): Promise<HedyResponse> => {
+  const url = isOnline ? "https://www.hedycode.com/parse" : `http://localhost:${port}/parse`;
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",

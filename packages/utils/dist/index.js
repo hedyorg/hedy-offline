@@ -26,8 +26,8 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/fetchHedy.ts
-var fetchHedy = async (code, level, port) => {
-  const url = `http://localhost:${port}/parse`;
+var fetchHedy = async (code, level, port, isOnline) => {
+  const url = isOnline ? "https://www.hedycode.com/parse" : `http://localhost:${port}/parse`;
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -46,8 +46,7 @@ var fetchHedy_default = fetchHedy;
 // src/runPython.ts
 var runPython = async (props) => {
   const { sk, code, level, port, setOutput, setInput, setHasTurtle, onError, onComplete } = props;
-  const hedyResponse = await fetchHedy_default(code, level, port);
-  console.log(sk);
+  const hedyResponse = await fetchHedy_default(code, level, port, props.isOnline);
   if (hedyResponse.Error) {
     onError(hedyResponse.Error, hedyResponse.Location);
     return;

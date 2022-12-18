@@ -108,6 +108,7 @@ const EditorResults: React.FC = () => {
       },
       onError,
       onComplete,
+      isOnline: editorContext.useOnline,
     });
   };
 
