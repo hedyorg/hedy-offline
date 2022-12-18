@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --text-selection: text;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  -webkit-touch-callout: var(--text-selection);
+  -webkit-user-select: var(--text-selection);
+  -khtml-user-select: var(--text-selection);
+  -moz-user-select: var(--text-selection);
+  -ms-user-select: var(--text-selection);
+  user-select: var(--text-selection);
+}

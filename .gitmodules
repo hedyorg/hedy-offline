@@ -1,3 +1,6 @@
 [submodule "hedy"]
 	path = hedy
-	url = https://github.com/hedyorg/hedy
+	url = https://github.com/hedyorg/hedy.git
+[submodule "apps/electron/hedy"]
+	path = apps/electron/hedy
+	url = https://github.com/hedyorg/hedy.git
