@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { FiChevronLeft } from "react-icons/fi";
-import Link from "next/link";
 import getAdventures from "../../../../helpers/getAdventures";
 
 const Editor = dynamic(() => import("ui/Editor").then((mod) => mod), { ssr: false });
@@ -43,6 +42,8 @@ const Adventure: React.FC<AdventureProps> = (props) => {
   return (
     <>
       <Head>
+        <title>Hedy Offline</title>
+        <link rel="icon" href="/images/icon/favicon.ico" />
         <script type="text/javascript" src="/skulpt.js"></script>
       </Head>
 
