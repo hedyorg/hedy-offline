@@ -51,6 +51,10 @@ Thank you for considering contributing to Hedy-Offline! Your help is greatly app
 
 If you're having trouble using Hedy-Offline, please file an issue on our issue tracker. We'll do our best to help you out.
 
+## Multiplatform support
+
+Since Hedy Offline has been built with TypeScript and React as its core technologies, many of its main components can work in different platform environments. In the `apps/website` folder, you can find an example of the editor being implemented in a Next.js website. However, this is not the only platform that Hedy Offline can support. In the future, it could also be possible to use tools like [Capacitor](https://capacitorjs.com/) to bring Hedy Offline to mobile platforms.
+
 ## Additional information
 
 Hedy-Offline was originally created by [Mustafa Darwesh](https://github.com/moesmoesie) as a thesis project under the supervision of [Felienne Hermans](https://github.com/Felienne) and [Giulio Barbero](https://www.universiteitleiden.nl/en/staffmembers/giulio-barbero#tab-1) with the aim of making Hedy more accessible in developing countries with poor internet connectivity. The project's goal was to allow people in these regions to access and use Hedy even when their internet connection was unreliable or non-existent.
