@@ -1,4 +1,4 @@
-import { fetchHedy } from "./fetchHedy";
+import fetchHedy from "./fetchHedy";
 
 interface runPythonProps {
   sk: any;
@@ -13,7 +13,7 @@ interface runPythonProps {
   onComplete: () => void;
 }
 
-export const runPython = async (props: runPythonProps) => {
+const runPython = async (props: runPythonProps) => {
   const { sk, code, level, port, setOutput, setInput, setHasTurtle, onError, onComplete } = props;
   const hedyResponse = await fetchHedy(code, level, port);
 
@@ -56,9 +56,11 @@ export const runPython = async (props: runPythonProps) => {
     );
     onComplete();
   } catch (error) {
-    onError(error.toString(), []);
+    onError("Error", []);
   }
 };
+
+export default runPython;
 
 const normal_prefix = `# coding=utf8
 import random, time

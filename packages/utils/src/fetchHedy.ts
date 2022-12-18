@@ -1,4 +1,4 @@
-export const fetchHedy = async (code: string, level: string, port: string): Promise<HedyResponse> => {
+const fetchHedy = async (code: string, level: string, port: string): Promise<HedyResponse> => {
   const url = `http://localhost:${port}/parse`;
   const response = await fetch(url, {
     headers: {
@@ -14,3 +14,5 @@ export const fetchHedy = async (code: string, level: string, port: string): Prom
 
   return await response.json();
 };
+
+export default fetchHedy;

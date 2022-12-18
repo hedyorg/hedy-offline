@@ -1,6 +1,6 @@
 import React, { createContext, MutableRefObject, useContext, useEffect, useRef, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
-import { runPython } from "../../helpers/runPython";
+import { runPython } from "utils";
 import EditorContext from "./Editor.Context";
 import { ipcRenderer } from "electron";
 

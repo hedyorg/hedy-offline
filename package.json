@@ -1,40 +1,24 @@
 {
+  "name": "turborepo-basic-shared",
+  "version": "0.0.0",
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
-  "version": "1.0.0",
-  "author": "Yoshihide Shiono <shiono.yoshihide@gmail.com>",
-  "main": "app/background.js",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "nextron",
-    "build": "nextron build",
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "postinstall": "electron-builder install-app-deps"
   },
-  "dependencies": {
-    "@fontsource/poppins": "^4.5.10",
-    "@fontsource/source-code-pro": "^4.5.12",
-    "@headlessui/react": "^1.7.7",
-    "detect-port": "^1.5.1",
-    "electron-serve": "^1.1.0",
-    "electron-store": "^8.1.0",
-    "framer-motion": "^7.10.2",
-    "js-yaml": "^4.1.0",
-    "markdown-to-jsx": "^7.1.8",
-    "react-ace": "^10.1.0",
-    "react-icons": "^4.7.1"
-  },
   "devDependencies": {
-    "@types/node": "^16.11.7",
-    "@types/react": "^18.0.8",
-    "autoprefixer": "^10.4.7",
-    "electron": "^20.1.0",
-    "electron-builder": "^23.3.3",
-    "next": "^12.2.5",
-    "nextron": "^8.2.0",
-    "postcss": "^8.4.13",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.1.8",
-    "typescript": "^4.8.2"
+    "prettier": "^2.5.1",
+    "turbo": "latest"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
   }
 }

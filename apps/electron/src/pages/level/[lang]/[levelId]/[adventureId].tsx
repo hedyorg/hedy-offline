@@ -1,8 +1,6 @@
 import getAdventures from "../../../../helpers/getAdventures";
-
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import Script from "next/script";
 
 const Editor = dynamic(() => import("../../../../components/Editor"), { ssr: false });
 
