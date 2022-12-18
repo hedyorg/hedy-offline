@@ -1,80 +1,56 @@
-# Nextron in a Turborepo
+# Hedy-Offline
 
-Here we demonstrate an electron (Nextron) app running within a Tuborepo.
+Hedy-Offline is an offline version of the gradual programming language [Hedy](https://www.hedycode.com/). This version allows people to use Hedy even when they have a poor or unreliable internet connection, making it especially useful in developing countries.
 
-## To Run
+Hedy-Offline is built using [Electron](https://www.electronjs.org/) and [Next.js](https://nextjs.org/), and includes a bundled version of the [Hedy codebase](https://github.com/hedyorg/hedy) as well as a local Python virtual environment. When the app is launched, the Hedy server is started on a local host and the app connects to this local server as if it were the live Hedy server.
 
-`yarn workspace nextron-app dev`
+Please note that not all features of Hedy may be available in Hedy-Offline. However, we strive to include as many of the original features as possible.
 
-## How it was made
+## Development
 
-We got here by following these steps from an existing tuborepo:
+To get started with development, follow these steps:
 
-### Create Nextron
+```bash
+git clone https://github.com/moesmoesie/hedy-offline.git
+yarn install
+cd ./apps/electron
+python3.7 -m venv venv
 
-```
-npx create-nextron-app nextron-app
-```
+# Windows
+venv\Scripts\activate.bat
 
-Copy `nextron-app` into `apps`
+# Unix or Linux
+source venv/bin/activate
 
-### Edit Renderer Next Config
-
-Edit `apps/nextron-app/renderer/next.config.js`. We will merge the existing config with the `next.config.js` from the web apps, which includes next-transpile-modules and React Native Web config.
-
-```js
-const withTM = require("next-transpile-modules")(["ui"]);
-
-module.exports = withTM({
-  reactStrictMode: true,
-  webpack: (config, { isServer }) => {
-    config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      // Transform all direct `react-native` imports to `react-native-web`
-      "react-native$": "react-native-web",
-    };
-    config.resolve.extensions = [
-      ".web.js",
-      ".web.ts",
-      ".web.tsx",
-      ...config.resolve.extensions,
-    ];
-
-    if (!isServer) {
-      config.target = "electron-renderer";
-    }
-
-    return config;
-  },
-});
+pip install -r ./hedy/requirements.txt
+yarn dev #from root
 ```
 
-### Use Button from App
+This will start the development server and allow you to view and work on the code locally. Note that the command to activate the virtual environment may vary depending on your operating system and make sure that `python3.7` is in your system's path.
 
-Add to dependencies of `apps/nextron-app/package.json`:
+## Downloading Hedy-Offline
 
-```
-"ui": "*",
-```
+To download the latest release of Hedy-Offline, visit the [release page](https://github.com/moesmoesie/hedy-offline/releases). From there, you can download the executable. Please note that the current release version only works on MacOS.
 
-Now rename `apps/nextron-app/pages/home.jsx` to `home.tsx` and add the button:
+Once the download is complete, extract the package and run the executable to launch Hedy-Offline.
 
-```jsx
-import { Button } from "ui";
-...
-        <Button onPress={() => {}} />
-```
+## Contribute
 
-### Postinstall Step in Workspace
+If you're interested in contributing to the development of Hedy-Offline, we'd love to have your help! Here are some ways you can contribute:
 
-Remove the following line from `apps/nextron-app/package.json`, and move it to the root `package.json`
+- Report bugs or issues you encounter while using Hedy-Offline.
+- Suggest new features or improvements to existing features.
+- Help with documentation, including updating the README and creating guides for users.
+- Write code to fix bugs or implement new features.
 
-```
-    "postinstall": "electron-builder install-app-deps"
-```
+To get started, please create a GitHub account and fork the Hedy-Offline repository. Once you've made your changes, submit a pull request and we'll review your contribution.
 
-> Why? There is an error when this postinstall step is used within the package. I'm not exactly sure why, but this change allow electron-builder to do its job! Alternatively, [this might work](https://github.com/electron-userland/electron-builder/issues/3984#issuecomment-784524894).
+Thank you for considering contributing to Hedy-Offline! Your help is greatly appreciated.
 
-### To Do:
+## Support
 
-Use TS from the main process ("server side" of the app)
+If you're having trouble using Hedy-Offline, please file an issue on our issue tracker. We'll do our best to help you out.
+
+## Additional information
+
+Hedy-Offline was originally created by [Mustafa Darwesh](https://github.com/moesmoesie) as a thesis project under the supervision of [Felienne Hermans](https://github.com/Felienne) and [Giulio Barbero](https://www.universiteitleiden.nl/en/staffmembers/giulio-barbero#tab-1) with the aim of making Hedy more accessible in developing countries with poor internet connectivity. The project's goal was to allow people in these regions to access and use Hedy even when their internet connection was unreliable or non-existent.
