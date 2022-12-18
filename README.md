@@ -55,6 +55,15 @@ If you're having trouble using Hedy-Offline, please file an issue on our issue t
 
 Since Hedy Offline has been built with TypeScript and React as its core technologies, many of its main components can work in different platform environments. In the `apps/website` folder, you can find an example of the editor being implemented in a Next.js website. However, this is not the only platform that Hedy Offline can support. In the future, it could also be possible to use tools like [Capacitor](https://capacitorjs.com/) to bring Hedy Offline to mobile platforms.
 
+## Known Issues
+
+There are currently two major known issues with Hedy Offline:
+
+- Lack of syntax highlighting
+- CORS errors when using the website version of the editor to contact the Hedy API
+
+A workaround for the CORS error is to use a Chrome plugin like [Moesif](https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=nl), but this is not ideal because it requires the user to download a plugin and introduces security risks. The ideal solution would be for the Core Hedy Team to give the Hedy Offline URL permission to use the API without encountering CORS errors.
+
 ## Additional information
 
 Hedy-Offline was originally created by [Mustafa Darwesh](https://github.com/moesmoesie) as a thesis project under the supervision of [Felienne Hermans](https://github.com/Felienne) and [Giulio Barbero](https://www.universiteitleiden.nl/en/staffmembers/giulio-barbero#tab-1) with the aim of making Hedy more accessible in developing countries with poor internet connectivity. The project's goal was to allow people in these regions to access and use Hedy even when their internet connection was unreliable or non-existent.
