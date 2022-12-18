@@ -4,6 +4,7 @@ import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-min-noconflict/theme-chrome";
+import { useEffect } from "react";
 
 interface EditorCodeType {
   code: string;
@@ -11,9 +12,16 @@ interface EditorCodeType {
 }
 
 const EditorCode: React.FC<EditorCodeType> = (props) => {
+  let code = props.code;
+  code = props.code.replaceAll("{", ""); //FIX THIS
+  code = code.replaceAll("}", ""); //FIX THIS
+
+  useEffect(() => {
+    props.setCode(code);
+  }, []);
   return (
     <AceEditor
-      value={props.code}
+      value={code}
       onChange={(code) => {
         props.setCode(code);
       }}

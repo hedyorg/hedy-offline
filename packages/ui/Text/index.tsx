@@ -7,8 +7,8 @@ interface TextType {
 
 const Text: React.FC<TextType> = (props) => {
   let content = props.content;
-  content = content.replaceAll("{", "");
-  content = content.replaceAll("}", "");
+  content = content.replaceAll("{", ""); //FIX THIS
+  content = content.replaceAll("}", ""); //FIX THIS
 
   return (
     <MD
