@@ -47,6 +47,7 @@ var fetchHedy_default = fetchHedy;
 var runPython = async (props) => {
   const { sk, code, level, port, setOutput, setInput, setHasTurtle, onError, onComplete } = props;
   const hedyResponse = await fetchHedy_default(code, level, port);
+  console.log(sk);
   if (hedyResponse.Error) {
     onError(hedyResponse.Error, hedyResponse.Location);
     return;

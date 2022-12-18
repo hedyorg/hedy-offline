@@ -1,8 +1,7 @@
-import React, { createContext, MutableRefObject, useContext, useEffect, useRef, useState } from "react";
+import React, { createContext, MutableRefObject, RefObject, useContext, useEffect, useRef, useState } from "react";
 import { IoSettingsOutline } from "react-icons/io5";
 import { runPython } from "utils";
 import EditorContext from "./Editor.Context";
-import { ipcRenderer } from "electron";
 
 const states = {
   unTouched: "unTouched",
@@ -16,17 +15,17 @@ type State = typeof states[keyof typeof states];
 
 const EditorResultsContext = createContext<{
   state: State;
-  onInputSubmit?: MutableRefObject<(text: string) => void>;
+  onInputSubmit: MutableRefObject<(text: string) => void>;
   showInput: boolean;
   inputPromt: string;
   output: string;
   hasTurtle: boolean;
   errorMessage: string;
   errorLines: number[];
-}>(null);
+} | null>(null);
 
 const EditorResults: React.FC = () => {
-  const editorContext = useContext(EditorContext);
+  const editorContext = useContext(EditorContext)!;
 
   const [output, setOutput] = useState<string>("");
   const [hasTurtle, setHasTurtle] = useState<boolean>(false);
@@ -36,12 +35,14 @@ const EditorResults: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [errorLines, setErrorLines] = useState<number[]>([]);
 
-  const onInputSubmit = useRef<(text: string) => void>();
+  const onInputSubmit = useRef<(text: string) => void>(() => console.log("No input"));
 
   // FUNCTIONS
   const onError = (error: string, lines?: number[]) => {
     setErrorMessage(error);
-    setErrorLines(lines);
+    if (lines) {
+      setErrorLines(lines);
+    }
     setState("error");
   };
 
@@ -81,7 +82,7 @@ const EditorResults: React.FC = () => {
   const runCode = async () => {
     const code = editorContext.hedy;
     const level = editorContext.levelId;
-    const port = await ipcRenderer.invoke("getPort");
+    const port = editorContext.port;
 
     setState("loading");
 
@@ -94,7 +95,7 @@ const EditorResults: React.FC = () => {
     await new Promise((res) => setTimeout(res, 300));
 
     runPython({
-      sk: window.Sk,
+      sk: editorContext.skulpt,
       code,
       level,
       port,
@@ -131,7 +132,7 @@ const EditorResults: React.FC = () => {
 };
 
 const Content = () => {
-  const editorResultsContext = useContext(EditorResultsContext);
+  const editorResultsContext = useContext(EditorResultsContext)!;
   const loadingOrUntouched = ["loading", "unTouched"].includes(editorResultsContext.state);
 
   return (
@@ -159,7 +160,7 @@ const Content = () => {
 export default EditorResults;
 
 const Banner: React.FC = () => {
-  const editorResultsContext = useContext(EditorResultsContext);
+  const editorResultsContext = useContext(EditorResultsContext)!;
   const { state } = editorResultsContext;
 
   return (

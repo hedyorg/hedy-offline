@@ -11,10 +11,15 @@ import EditorResults from "./Editor.Results";
 interface EditorProps {
   adventure: AdventureType;
   level: LevelType;
+  setLang: (lang: string) => void;
   lang: string;
   levelId: string;
   adventureId: string;
   languages: string[];
+  port: string;
+  useOnline: boolean;
+  skulpt: any;
+  backButton: React.ReactNode;
 }
 
 const Editor: React.FC<EditorProps> = (props) => {
@@ -22,7 +27,7 @@ const Editor: React.FC<EditorProps> = (props) => {
   return (
     <EditorContext.Provider value={{ hedy, setHedy, ...props }}>
       <div className="w-full h-full flex flex-col">
-        <Header />
+        <Header backButton={props.backButton} />
         <EditorContainer left={<Left />} right={<Right />} />
       </div>
     </EditorContext.Provider>
@@ -30,7 +35,7 @@ const Editor: React.FC<EditorProps> = (props) => {
 };
 
 const Left = () => {
-  const editorContext = useContext(EditorContext);
+  const editorContext = useContext(EditorContext)!;
   const [code, setCode] = useState(editorContext.level?.start_code ?? "");
   const prevCode = useRef<string>("");
 
@@ -53,7 +58,7 @@ const Left = () => {
 };
 
 const Right: React.FC = () => {
-  const appContext = useContext(EditorContext);
+  const appContext = useContext(EditorContext)!;
   const [panel, setPanel] = useState<"info" | "results">("info");
 
   useEffect(() => {

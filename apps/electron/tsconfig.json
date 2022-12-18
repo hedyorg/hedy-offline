@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -15,6 +19,15 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "./main/**/*.ts", "./src/**/*.ts", "./src/**/*.tsx", "../../packages/utils/src/runPython.ts", "../../packages/utils/**/*.tsx", "../../packages/utils/global.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./main/**/*.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "../../packages/utils/src/runPython.ts",
+    "../../packages/utils/**/*.tsx",
+    "../../packages/utils/global.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

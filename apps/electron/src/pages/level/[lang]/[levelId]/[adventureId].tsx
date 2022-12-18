@@ -1,8 +1,13 @@
 import getAdventures from "../../../../helpers/getAdventures";
-import dynamic from "next/dynamic";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { ipcRenderer } from "electron";
+import { useRouter } from "next/router";
+import { FiChevronLeft } from "react-icons/fi";
+import Link from "next/link";
 
-const Editor = dynamic(() => import("../../../../components/Editor"), { ssr: false });
+const Editor = dynamic(() => import("ui/Editor").then((mod) => mod), { ssr: false });
 
 interface AdventureProps {
   adventure: AdventureType;
@@ -14,6 +19,34 @@ interface AdventureProps {
 }
 
 const Adventure: React.FC<AdventureProps> = (props) => {
+  const [port, setPort] = useState("4444");
+  const [skulpt, setSkulpt] = useState<any>(null);
+  const router = useRouter();
+
+  const getPort = async () => {
+    const p = await ipcRenderer.invoke("getPort");
+    setPort(p);
+  };
+
+  const getSkulpt = async () => {
+    while (true) {
+      if (window.Sk) {
+        setSkulpt(window.Sk);
+        break;
+      }
+      await new Promise((r) => setTimeout(r, 10));
+    }
+  };
+
+  const setLang = (lang: string) => {
+    router.push(`/level/${lang}/${props.levelId}/${props.adventureId}`);
+  };
+
+  useEffect(() => {
+    getPort();
+    getSkulpt();
+  }, []);
+
   return (
     <>
       <Head>
@@ -21,7 +54,7 @@ const Adventure: React.FC<AdventureProps> = (props) => {
       </Head>
 
       <main className="h-screen w-screen">
-        <Editor {...props} />
+        <Editor backButton={<BackButton />} setLang={setLang} skulpt={skulpt} useOnline={false} port={port} {...props} />
       </main>
     </>
   );
@@ -63,4 +96,15 @@ export const getStaticProps = async (context) => {
       languages: ["en", "nl"],
     },
   };
+};
+
+const BackButton = () => {
+  return (
+    <Link href={`/home`}>
+      <button className="flex group hover:text-neutral-300 transition-colors text-neutral-100 font-mono items-center gap-4">
+        <FiChevronLeft className="group-hover:-translate-x-2 transition-transform" size="24px" />
+        Back to exercises
+      </button>
+    </Link>
+  );
 };

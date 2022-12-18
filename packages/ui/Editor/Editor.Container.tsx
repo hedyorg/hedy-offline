@@ -8,7 +8,7 @@ interface EditorContainerProps {
 
 const EditorContainer: React.FC<EditorContainerProps> = ({ left, right }) => {
   const [isMouseDown, setIsMouseDown] = useState(false);
-  const r = useRef<HTMLElement>(null);
+  const r = useRef<HTMLElement | null>(null);
   const container = useRef<HTMLDivElement>(null);
 
   const onMouseDown = () => {
@@ -18,12 +18,15 @@ const EditorContainer: React.FC<EditorContainerProps> = ({ left, right }) => {
   };
 
   const onMouseUp = () => {
+    if (!r.current) return;
     r.current.style.setProperty("--text-selection", "text");
     setIsMouseDown(false);
   };
 
   useEffect(() => {
-    r.current = document.querySelector(":root");
+    if (!r.current) {
+      r.current = document.querySelector(":root");
+    }
   }, []);
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -47,10 +50,6 @@ const EditorContainer: React.FC<EditorContainerProps> = ({ left, right }) => {
 
     return value;
   });
-
-  useEffect(() => {
-    r.current = document.querySelector(":root");
-  }, []);
 
   return (
     <div onMouseMove={onMouseMove} onMouseUp={onMouseUp} onMouseLeave={onMouseUp} className="h-full w-full flex flex-col overflow-hidden">
