@@ -57,9 +57,10 @@ Since Hedy Offline has been built with TypeScript and React as its core technolo
 
 ## Known Issues
 
-There are currently two major known issues with Hedy Offline:
+There are currently three major known issues with Hedy Offline:
 
 - Lack of syntax highlighting
+- The first time loading the app may take long (15 seconds). Some developers who have built electron apps have reported similar experiences online. However, subsequent loads should be faster.
 - CORS errors when using the website version of the editor to contact the Hedy API
 
 A workaround for the CORS error is to use a Chrome plugin like [Moesif](https://chrome.google.com/webstore/detail/moesif-origin-cors-change/digfbfaphojjndkpccljibejjbppifbc?hl=nl), but this is not ideal because it requires the user to download a plugin and introduces security risks. The ideal solution would be for the Core Hedy Team to give the Hedy Offline URL permission to use the API without encountering CORS errors.
